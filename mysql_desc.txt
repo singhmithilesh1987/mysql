@@ -1,0 +1,200 @@
+#Mysql
+Mysql is a relational dabase management system which provides feature to execute the sql query to perform some database operations like insert, update etc. and it manages data in tabular format.
+
+#database
+It is organised form of the data for easy to manipulate and it can be accessed in many ways - tabular, graph, tree and document formats.
+
+#DBMS and RDBMS
+1. it is a program that controls database all operations like create update etc and where all backend data are managed into different format like tabular, graph, tree and document formats
+Ex - Oracle DB, Microsoft sql server, Mysql, MongoDB, ms access, sqlite, mariadb
+2. it is a program that controls database all operations like create update etc and relations as well and it managed data only into tabular format and it supports transactions (rollback, commit, acid property).
+Ex - Mysql, Sql server, postgreSQL, SQLite, MariaDB
+
+#SQL
+structred query language used to communicate with the database to perform DML and DDL operations like insert data into table, update data into table, create table structure in database etc.
+
+#advantage and disadvantage of mysql
+
+advantage :
+1.it is open source and free to use
+2.relational database more readable in tabular format
+3.cross platform database server
+4.data security -  complex encryption algorithms
+
+disadvantage :
+1.it does not handle transactions very efficiently data corruption is possible.
+2.it does not support a very large database size efficiently.
+3.it does not support SQL check constraints.
+
+#list mysql database engines - InnoDB (default), MyIsam, memory, archive, csv, blackhole etc.
+
+#difference between MYISAM and INNODB
+MYISAM - table level locking, no transaction support, no relations support, ex-default storage engine
+INNODB - row level locking, transaction support, relations support, current-default storage engine
+
+#DML and DDL
+1.Data manipulation language which perform on data in table to manipulate like insert, update, delete and retrive the data etc.
+2.Data definition language which perform on data structure to manipulate like create, alter, drop, truncate etc.
+
+#table and fields :
+Table is a organised data model with row and column.
+Field is a vertical line in table.
+Row is a horizontal line in table that's called record
+
+#Primary key - A key which refers the table ID with unique and not null constraints, every table can have only one primary key and it most uniquely identifies a row. 
+
+#Foreign key - A key which can have more than one in another table but that key must references to a primary key in first table.
+
+#Unique key - A constraints with null value it is used to specify the record uniquely in the database. table can have a column or set of column.
+
+#join - It is a keyword to use to establish the relation between tables like :
+
+#Types of relations in mysql :
+1. one to one : first table row matches with a row in second table.
+2. one to many : first table row matches with second table many rows
+3. many to many : first table many rows matches with second table many rows
+
+#type of join 
+Inner  - return all records from both tables which are matched.
+Left  - return all records from first table and matched records from second table, in case of no match it will return null value from second table.
+Right - return all records from second table and matched records from first table, in case of no match it will return null value from first table.
+Self - A table relation perform on itself called self join.
+cross - returns all records from both table - table1 and table2. it returns potentially very large result-set.
+
+#Difference between having and where clause
+where - filter records with specified conditons in the whole records in the database table.
+having - filter records on aggregated records of the table.
+
+#Difference between group by and order by
+group by - used to aggregate the records in table.
+order by - sorts the records in asc and desc order.
+
+#Difference between delete, truncate and drop
+delete - it is a DML property used to delete a record or records in table.
+truncate - it is a DDL property used to delete the data as well as reset the auto_increament constraints.
+drop - DDL property used to delete table data as well as structure. 
+
+#constraints : rules for data, limitation of the data.
+NOT NULL
+UNIQUE
+DEFAULT
+PRIMARY KEY
+FOREIGN KEY
+
+#NULL and default
+NULL - no value and 
+default - default value of the column
+
+#transaction, ACID property and deadlock
+
+Transaction - process to perform some database operations within single session if session is broken at any operation it will be rollback and again it will start trasaction session and if transaction is done final amount will update into database permanently.
+
+ACID - Atomic, Consistency, Isolation, Durability
+Atomic - If all trans are performed well then it will update last changes into database permanently. if it get failed at any stage of the trans operation it will rollback the current session for new start.
+Consistency - it check the operation consistently whether before trans and after trans amount is equal or not.
+Isolation -  multiple transactions can occur concurrently without any hassles it checks and maintains the unique state for all trans so that it can not be interrept together.
+Durability - It checks whether final amount should be rollback or commit to the database finaly.
+
+Deadlock - A deadlock is a situation where different transactions are unable to proceed because all trans are waiting for resource in this situation all trans are waiting in particular set
+
+#commit and rollback
+commit - save changes permanently into database after transaction completed
+rollback - cancel the current session of the transaction on failed
+
+#indexing and types :
+Indexing is a command/technique to scaning the data through the memory location unique id in database table so this is how indexes works to retrive data very fast and it is mostly used in joins with large amount of data. 
+Index search : index table in memory location take unique id -> using memory location id scan into main table.
+create index index_name on table_name(field, field) - create index against table
+show index from table_name - show all indexes against table
+drop index index_name on table_name - drop all indexes from table
+explain select ename from emp where salary=value - return information about query.
+Type - primary,secondary and clustred index
+
+#view - it is a virtual table. it is a result set of stored query view stores query to simplify the complex query.
+view stores sql query associated with the table in databse somewhere that location is called view, view does not take any physical memory location it's a just projected focus of some selected columns. there are two types of view : read-only - (query with group by, nested query, join with multiple tables), updatable view - (INSERT)
+Ex :
+create view :
+create view view_name as
+select column from table t1 inner join table t2 on t1.fkey_id=f2.pkey_id
+
+alter view :
+alter view view_name as
+select column from table t1 inner join table t2 on t1.fkey_id=f2.pkey_id
+
+create or alter view :
+create or replace view view_name as
+select column from table t1 inner join table t2 on t1.fkey_id=f2.pkey_id
+
+select data from view instead of table :
+select * from view_name
+
+delete view :
+drop view view_name
+
+#stored procedure - it is a collection of pre-compiled sql statements stored inside the database. stored procedure are created to perform one or more DML operations on database.
+syntax :
+delimeter &&
+create procedure procedure_name ([in | out | inout] parameter datatype)
+begin
+variable_declration_section
+sql_command_executable_section
+end &&
+delimeter;
+Ex :
+delimeter &&
+create procedure get_emp()
+begin
+insert into emp (emp_name, phone) values ('test', '1234567891');
+select * from emp;
+end &&
+delimeter;
+how to run procedure in program : call procedure_name();
+
+#difference between view and procedure :
+view - it does not take parameter, only one sql query, it does not occupy memory location
+procedure - it take parameter, group of sql queries, it occupy physical memory location
+
+#trigger - it is a special type of stored procedure that is invoked automatically when any DML event occured, trigger contains set of certain sql conditions to validate columns. Each trigger is accociated with a table which is activated on any DML statement such as insert, update or delete. trigger increases the performance of the sql query because it does not need to compile each time the query is executed.
+
+syntax :
+create trigger trigger_name trigger_time - before/after trigger_event
+on table_name for each row
+begin
+variable_declaration
+trigger_code
+end;
+
+Ex :
+create trigger validate_column before insert on emp for each row
+begin
+IF NEW.price < 0 THEN SET NEW.price=0;
+end;
+
+#query optimization :
+It is a process of writting sql query to improve the databse performance.
+some points to optimize query :
+1.use appropriate datatype and size of the data
+2.indexes should be use only on those fields which are most frequentely use in data searching.
+3.split large query into smaller query
+4.select only those fields which are actually required
+5. use <> operator instead of not in keyword in query
+6. use virtual table instead writting large join query
+
+#Normalization :
+It is a process of organizing the data in database it uses to reduce the data redundancy from the table it can have data redundancy in two different form 1) row form 2) column form and it is used to eleminate insert, update, delete aromalies.
+1NF - split column name into two different column like fullname, mobile etc.
+2NF - remove partial table redundancy
+3NF - remove transitive table redundancy
+BCNF - (Boyce Codd Normal Form) is the advanced version of 3NF.
+
+#Entity integrity :
+It is a relational constraint which does not allow NULL value or any repeating value to primary field.
+
+#Referencial intigrity :
+It is a relational constraint in which all foreign key should reference to their primary key. referecial intigrity is based on entity intigrity.
+
+#DUAL - It is a table automatically created by Oracle Database along with the data dictionary. DUAL is in the schema of the user SYS but is accessible by the name DUAL to all users. It has one column, DUMMY , defined to be VARCHAR2(1) , and contains one row with a value X .
+
+
+
+
