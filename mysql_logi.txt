@@ -1,0 +1,196 @@
+#Remove duplicated records from table
+DELETE u1 FROM user u1, user u2 WHERE u1.id > u2.id and u1.emailid=u2.emailid
+
+#List role based users using self join Ex - user table with role id
+SELECT u2.name, u1.name as manager FROM `user` u1, user u2 WHERE u1.id=u2.manager
+
+#List users with total amount Ex - emp and payment table
+SELECT user.id,user.name, SUM(payment.amount) as tot_amount FROM `user` INNER JOIN payment ON user.id=payment.user_id GROUP BY payment.user_id
+SELECT user.id, name, IF(amount > 0, SUM(amount), 0) as amount FROM `user` LEFT JOIN payment ON user.id=payment.user_id GROUP BY payment.user_id ORDER BY user.id
+
+#Find the nth maximum amount from the table
+SELECT DISTINCT(salary) FROM `user` ORDER BY salary DESC LIMIT n-1,1 (for nth number)
+
+#correct sequence - SELECT,FROM,WHERE,ORDER BY,HAVING,GROUP BY,LIMIT
+SELECT,FROM,WHERE,GROUP BY,HAVING,ORDER BY,LIMIT
+
+#Fetch distinct record from duplicated records from table
+SELECT * FROM `user` GROUP by salary HAVING COUNT(salary) > 1
+with duplicate count :
+SELECT name, salary, COUNT(salary) as salary FROM `user` GROUP by salary HAVING COUNT(salary) > 1 
+
+#Find all duplicates records from table
+SELECT * FROM `user` WHERE id NOT IN (SELECT id FROM user GROUP BY salary HAVING COUNT(emailid) = 1)
+
+SELECT id, name, salary, COUNT(salary) as rank FROM `user` GROUP BY salary - ranking pending
+
+sql query to get day of last day of the previous month - pending
+
+------------------------------------------------------------------
+SQL query :
+
+create database database_name
+
+SHOW DATABASES
+
+DROP DATABASE db_name
+
+SHOW TABLES
+
+create table table_name(col1 int(10), col2 varchar(255))
+
+CREATE TABLE Persons (Personid int NOT NULL AUTO_INCREMENT,LastName varchar(255) NOT NULL,FirstName varchar(255),Age int,PRIMARY KEY (Personid))
+
+insert into table_name(col1, col2) values (val, val)
+
+UPDATE table_name SET column1 = value1 WHERE condition
+
+ALTER TABLE Customers ADD Email varchar(255)
+
+ALTER TABLE Customers DROP COLUMN Email
+
+ALTER TABLE Persons MODIFY COLUMN DateOfBirth year
+
+ALTER TABLE Persons DROP COLUMN DateOfBirth
+
+ALTER TABLE table_name ADD PRIMARY KEY (column_name)
+
+ALTER TABLE table_name DROP PRIMARY KEY
+
+ALTER TABLE Persons AUTO_INCREMENT=100
+
+DROP TABLE table_name
+
+DELETE FROM table_name
+
+DELETE FROM table_name WHERE condition
+
+DESCRIBE or DESC table_name
+
+RENAME TABLE table_name TO new_table_name
+
+SELECT * FROM table_name
+
+SELECT column1, column2 FROM table_name
+
+SELECT DISTINCT (column) FROM table_name
+
+SELECT column_list FROM table_name WHERE condition
+
+SELECT column1 AS alias_name FROM table_name
+
+SELECT COUNT(*) FROM table_name
+
+SELECT select_list FROM table_name ORDER BY column1 ASC/DESC, column2 ASC/DESC
+
+SELECT select_list FROM table_name GROUP BY column_1, column_2
+
+SELECT select_list FROM table1 INNER JOIN table2 ON condition
+
+SELECT select_list FROM table1 LEFT JOIN table2 ON condition
+
+SELECT select_list FROM table1 RIGHT JOIN table2 ON condition
+
+SELECT select_list FROM table1 CROSS JOIN table2
+
+SELECT select_list FROM table_name WHERE column LIKE ‘%pattern%’ (or ‘_ABC’)
+
+SELECT column1, column2 FROM table_name WHERE condition1 AND condition2 AND condition3
+
+SELECT column1, column2 FROM table_name WHERE condition1 OR condition2 OR condition3
+
+SELECT * FROM Customers WHERE NOT Country = 'Germany'
+
+SELECT * FROM Customers ORDER BY Country ASC, CustomerName DESC
+
+SELECT column_names FROM table_name WHERE column_name IS NULL
+
+SELECT column_names FROM table_name WHERE column_name IS NOT NULL
+
+SELECT mark, IF(mark >= 60, 'pass', 'fail') AS res FROM student
+
+SELECT * FROM Customers LIMIT 3
+
+SELECT * FROM Customers WHERE Country='Germany' LIMIT 3
+
+SELECT MIN(Price) AS SmallestPrice FROM Products
+
+SELECT MAX(Price) AS LargestPrice FROM Products
+
+SELECT COUNT(* or ProductID) FROM Products - NULL values are ignored
+
+SELECT AVG(Price) FROM Products
+
+SELECT SUM(Quantity) FROM OrderDetails
+
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%' // a%,%a, %a%
+
+SELECT * FROM Customers WHERE CustomerName LIKE 'a__%'
+
+SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK')
+
+SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK')
+
+SELECT * FROM Customers WHERE Country IN (SELECT Country FROM Suppliers)
+
+SELECT * FROM Products WHERE Price BETWEEN 10 AND 20
+
+SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20
+
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName FROM ((Orders INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID) INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID)
+
+SELECT A.CustomerName AS CustomerName1 FROM Customers A, Customers B WHERE A.CustomerID <> B.CustomerID AND A.City = B.City ORDER BY A.City
+
+SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID GROUP BY ShipperName
+
+SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country HAVING COUNT(CustomerID) > 5 ORDER BY COUNT(CustomerID) DESC
+
+SELECT SupplierName FROM Suppliers WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20)
+
+INSERT INTO Customers (CustomerName, City, Country) SELECT SupplierName, City, Country FROM Suppliers
+
+SELECT OrderID, Quantity, CASE WHEN Quantity > 30 THEN 'The quantity is greater than 30' WHEN Quantity = 30 THEN 'The quantity is 30' ELSE 'The quantity is under 30' END AS QuantityText FROM OrderDetails
+
+SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0)) FROM Products
+
+update emp set doj='14-mar-2023' where empid=1
+
+select name from student where age>22
+
+select * from emp where salary between 100 and 500
+select * from emp where salary >= 100 and salary <= 500
+
+select * from emp where emp_name like 'S%'
+
+select CONCAT(first_name,' ', last_name) from emp
+select first_name || '' || last_name from emp
+
+select * from emp where first_name like '____A'
+select * from emp where first_name like 'S___A'
+
+select * from emp where name != 'Anushka' and name != 'Amit'
+select * from emp where name NOT IN('Anushka', 'Amit')
+
+select current_date, current_timestamp fro DUAL
+
+select REPLACE(first_name, 'A', '@') from emp
+
+select SUBSTR(email, INSTR(email,'@')+1) from emp
+
+update emp set name = RTRIM(LTRIM(' Amit '))
+
+select * from emp where doj between '2022-01-01' and '2022-12-31'
+select * from emp where TO_CHAR(doj, 'yyyy') = '2022'
+
+
+
+
+
+
+
+
+
+
+
+
+
